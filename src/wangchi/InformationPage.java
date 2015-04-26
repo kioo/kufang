@@ -57,6 +57,6 @@ public class InformationPage extends AbstractTableModel {
 		
 		db = new DataBaseTest();
 		jilu = new Vector<Vector>();
-		jilu = db.Query();
+		jilu = db.Query(sql);
 	}
 }

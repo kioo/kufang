@@ -3,6 +3,7 @@ package wangchi;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.Vector;
 
 import com.mysql.jdbc.Connection;
@@ -28,11 +29,10 @@ public class DataBaseTest {
 		}
 	}
 
-	// 1.查询所有信息
-	public Vector<Vector> Query() {
+	// 1.查询语句
+	public Vector<Vector> Query(String sql) {
 		jilu = new Vector<Vector>(); // 创建查询结果存放的容器
 		try {
-			String sql = "select * from cailiaozhouqi";
 			ps = (PreparedStatement) ct.prepareStatement(sql);
 			rs = ps.executeQuery();
 
@@ -68,17 +68,80 @@ public class DataBaseTest {
 		return jilu;
 	}
 
-	// 2.通过名称查询
-
-	// 3.通过字段查询
-
 	// 4.添加
+	public void insertData(Vector data) {
+
+		String insert = ("insert into cailiaozhouqi values(?,?,?,?,?,?,?,?,?,?)");
+
+		try {
+			ps = (PreparedStatement) ct.prepareStatement(insert);
+			ps.setInt(1, Integer.parseInt((String) data.get(0)));
+			ps.setString(2, (String) data.get(1));
+			ps.setString(3, (String) data.get(2));
+			ps.setString(4, (String) data.get(3));
+			ps.setString(5, (String) data.get(4));
+			ps.setString(6, (String) data.get(5));
+			ps.setFloat(7, Float.parseFloat((String) data.get(6)));
+			ps.setString(8, (String) data.get(7));
+			ps.setString(9, (String) data.get(8));
+			ps.setDate(10, new java.sql.Date(new Date().getTime()));
+			ps.executeUpdate();
+
+		} catch (Exception e) {
+			System.out.println("插入失败");
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (ps != null) {
+					ps.close();
+				}
+				if (ct != null) {
+					ct.close();
+				}
+			} catch (Exception e) {
+			}
+		}
+	}
 
 	// 5.修改
+	public void updateData(Vector data) {
+		String ss = ("update cailiaozhouqi set "
+				                + "amount=?,gangwei=?,name=?,xinghao=?,"
+                                +"cailiaodanwei=?,price=?,cycle=?,usecycle=?,changetime=?  "
+                                + "where code=?");
+		try {
+			ps = (PreparedStatement) ct.prepareStatement(ss);
+			ps.setInt(1, Integer.parseInt((String) data.get(0))); // 1 amount
+			ps.setString(2, (String) data.get(1));// 2 gangwei
+			ps.setString(3, (String) data.get(3));// 3 name
+			ps.setString(4, (String) data.get(4));// 4 xinghao
+			ps.setString(5, (String) data.get(5));// 5 cailiaodanwei
+			ps.setFloat(6, Float.parseFloat((String) data.get(6))); // 6 price
+			ps.setString(7, (String) data.get(7));// 7 cycle
+			ps.setString(8, (String) data.get(8));// 8 usecycle
+			ps.setDate(9, new java.sql.Date(new Date().getTime()));
+			ps.setString(10, (String) data.get(2));// code
+			ps.executeUpdate();
 
-	// 6.删除
-	public static void main(String[] args) {
-		DataBaseTest d = new DataBaseTest();
-		d.Query();
+		} catch (Exception e) {
+			System.out.println("修改失败");
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (ps != null) {
+					ps.close();
+				}
+				if (ct != null) {
+					ct.close();
+				}
+			} catch (Exception e) {
+			}
+		}
 	}
+	// 6.删除
+
 }
