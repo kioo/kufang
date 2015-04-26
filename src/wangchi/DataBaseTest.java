@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
-//数据库页面
+//数据库页面,change
 public class DataBaseTest {
 	PreparedStatement ps = null;
 	Connection ct = null;
