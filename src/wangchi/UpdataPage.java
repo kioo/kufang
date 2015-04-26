@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.util.Date;
+import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -20,6 +21,7 @@ import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 
 public class UpdataPage extends JDialog implements ActionListener {
+	DataBaseTest db;
 	JLabel bq1,bq2,bq3,bq4,bq5,bq6,bq7,bq8,bq9,bq10;
 	JTextField wbk1,wbk2,wbk3,wbk4,wbk5,wbk6,wbk7,wbk8,wbk9,wbk10;
 	JButton an1, an2;
@@ -117,49 +119,28 @@ public class UpdataPage extends JDialog implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equals("xiugai")) {
-			
-			PreparedStatement ps = null;
-			Connection ct = null;
-			ResultSet rs = null;
-			Statement sm = null;
-
-			try {
-				Class.forName("com.mysql.jdbc.Driver");
-				ct = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/shangpin?user=root&password=5218791kioo)&useUnicode=true&characterEncoding=UTF8");
-				String ss = ("update cailiaozhouqi set amount=?,gangwei=?,name=?,xinghao=?,cailiaodanwei=?,price=?,cycle=?,usecycle=?,changetime=?  where code=?");
-				ps = (PreparedStatement) ct.prepareStatement(ss);
-				ps.setInt(1, Integer.parseInt(wbk1.getText())); //1 amount
-				ps.setString(2, wbk2.getText());//2 gangwei
-				ps.setString(3, wbk4.getText());//3 name
-				ps.setString(4, wbk5.getText());//4 xinghao
-				ps.setString(5, wbk6.getText());//5 cailiaodanwei
-				ps.setFloat(6, Float.parseFloat(wbk7.getText())); //6 price
-				ps.setString(7, wbk8.getText());//7 cycle
-				ps.setString(8, wbk9.getText());//8 usecycle
-				ps.setDate(9, new java.sql.Date(new Date().getTime()));//9 changtime
-				ps.setString(10, wbk3.getText());//code
-				ps.executeUpdate();
-			} catch (Exception e2) {
-					System.out.println("更新数据错误");
-			} finally {
-				try {
-					if (rs != null) {
-						rs.close();
-					}
-					if (ps != null) {
-						ps.close();
-					}
-					if (ct != null) {
-						ct.close();
-					}
-					this.dispose();
-				} catch (Exception e3) {
-					System.out.println("修改失败");
-				}
-			}
+			db = new DataBaseTest();
+			db.updateData(getData());
+			this.dispose();
 		} else if (e.getActionCommand().equals("quxiao")) {
 			this.dispose();
 		}
+	}
+	
+	public Vector getData(){
+		
+		Vector data = new Vector();
+		// 注意获取原始数据是object类型,需要强制转换成String类型
+		data.add((String) wbk1.getText());
+		data.add((String) wbk2.getText());
+		data.add((String) wbk3.getText());
+		data.add((String) wbk4.getText());
+		data.add((String) wbk5.getText());
+		data.add((String) wbk6.getText());
+		data.add((String) wbk7.getText());
+		data.add((String) wbk8.getText());
+		data.add((String) wbk9.getText());
+		return data;
 	}
 
 
