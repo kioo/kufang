@@ -22,6 +22,8 @@ public class DataBaseTest {
 			Class.forName("com.mysql.jdbc.Driver");
 			ct = (Connection) DriverManager
 					.getConnection("jdbc:mysql://localhost:3306/shangpin?user=root&password=5218791kioo)&useUnicode=true&characterEncoding=UTF8");
+			/*ct = (Connection) DriverManager
+					.getConnection("jdbc:mysql://localhost:3306/shangpin?user=root&password=123456&useUnicode=true&characterEncoding=UTF8");*/
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
@@ -143,5 +145,59 @@ public class DataBaseTest {
 		}
 	}
 	// 6.删除
+		public void delete(String code) {
+			String deleteSql = ("delete from cailiaozhouqi where code=?");
+			try {
+				ps = (PreparedStatement) ct.prepareStatement(deleteSql);
+				ps.setString(1, code);
+				ps.executeUpdate();
 
+			} catch (Exception e) {
+				System.out.println("修改失败");
+			} finally {
+				try {
+					if (rs != null) {
+						rs.close();
+					}
+					if (ps != null) {
+						ps.close();
+					}
+					if (ct != null) {
+						ct.close();
+					}
+				} catch (Exception e) {
+				}
+			}
+		}
+		// 获取总数据量
+		public int getDataAmount(){
+			
+			int amount = 0;
+			
+			String deleteSql = ("select count(*) from cailiaozhouqi");
+			try {
+				ps = (PreparedStatement) ct.prepareStatement(deleteSql);
+				rs =ps.executeQuery();
+				while(rs.next()){
+					amount = rs.getInt(1);
+				}
+
+			} catch (Exception e) {
+				System.out.println("查询总数失败");
+			} finally {
+				try {
+					if (rs != null) {
+						rs.close();
+					}
+					if (ps != null) {
+						ps.close();
+					}
+					if (ct != null) {
+						ct.close();
+					}
+				} catch (Exception e) {
+				}
+			}
+			return amount;
+		}
 }

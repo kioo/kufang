@@ -23,7 +23,7 @@ import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 
 public class MainPage extends JFrame implements ActionListener {
-
+	DataBaseTest db;
 	JPanel mb1, mb2;
 	JLabel bq1, bq2;
 	JTextField wbk1, wbk2;
@@ -85,8 +85,9 @@ public class MainPage extends JFrame implements ActionListener {
 		this.add(gd1);
 		this.add(mb1, "North");
 		this.add(mb2, "South");
-
-		this.setTitle("库房型号查询");
+		db = new DataBaseTest();
+		int amount = db.getDataAmount();
+		this.setTitle("库房物品管理系统                               "+"共"+amount+"条记录");
 		this.setSize(900, 600);
 		this.setLocation(201, 181);
 		this.setResizable(true);
@@ -132,39 +133,11 @@ public class MainPage extends JFrame implements ActionListener {
 				return;
 			}
 			String st = (String) infPage.getValueAt(ii, 2);
-			PreparedStatement ps = null;
-			Connection ct = null;
-			ResultSet rs = null;
-			Statement sm = null;
-
-			try {
-				Class.forName("com.mysql.jdbc.Driver");
-				ct = (Connection) DriverManager
-						.getConnection("jdbc:mysql://localhost:3306/shangpin?user=root&password=5218791kioo)&useUnicode=true&characterEncoding=UTF8");
-				ps = (PreparedStatement) ct
-						.prepareStatement("delete from cailiaozhouqi where code=?");
-				ps.setString(1, st);
-				ps.executeUpdate();
-			} catch (Exception e2) {
-			} finally {
-				try {
-					if (rs != null) {
-						rs.close();
-					}
-					if (ps != null) {
-						ps.close();
-					}
-					if (ct != null) {
-						ct.close();
-					}
-
-				} catch (Exception e3) {
-				}
-			}
+			db = new DataBaseTest();
+			db.delete(st);
 			infPage = new InformationPage();
 			bg1.setModel(infPage);
 		}
-
 	}
 
 	// 设置表格列的宽度
