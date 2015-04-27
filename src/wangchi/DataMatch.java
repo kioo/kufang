@@ -171,11 +171,5 @@ public class DataMatch {
 		}
 	}
 
-/*	public static void main(String[] args) {
-		DataMatch ym = new DataMatch();
-	    Vector y = ym.GetYDate();
-		Vector d = ym.GetDDate();
-		ym.intertYData(ym.Match(y, d));
 
-	}*/
 }
