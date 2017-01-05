@@ -143,5 +143,7 @@ public class UpdataPage extends JDialog implements ActionListener {
 		return data;
 	}
 
-
+	public void test(){
+		int a=10;
+	}
 }
