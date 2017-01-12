@@ -23,6 +23,8 @@ import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 
 public class MainPage extends JFrame implements ActionListener {
+		
+        int test = 1;
 	DataBaseTest db;
 	JPanel mb1, mb2;
 	JLabel bq1, bq2;
@@ -38,15 +40,15 @@ public class MainPage extends JFrame implements ActionListener {
 
 	public MainPage() {
 		mb1 = new JPanel();
-		bq1 = new JLabel("Îï×Ê±àºÅ");
+		bq1 = new JLabel("ç‰©èµ„ç¼–å·");
 		wbk1 = new JTextField(10);
-		bq2 = new JLabel("       Îï×ÊÃû³Æ");
+		bq2 = new JLabel("       ç‰©èµ„åç§°");
 		wbk2 = new JTextField(10);
 		
-		an5 = new JButton("²éÑ¯±àºÅ");
+		an5 = new JButton("æŸ¥è¯¢ç¼–å·");
 		an5.addActionListener(this);
 		an5.setActionCommand("chaxunbh");
-		an1 = new JButton("²éÑ¯Ãû³Æ");
+		an1 = new JButton("æŸ¥è¯¢åç§°");
 		an1.addActionListener(this);
 		an1.setActionCommand("chaxunmc");
 		mb1.add(bq1);
@@ -57,15 +59,15 @@ public class MainPage extends JFrame implements ActionListener {
 		mb1.add(an1);
 
 		mb2 = new JPanel();
-		an2 = new JButton("Ìí¼Ó");
+		an2 = new JButton("æ·»åŠ ");
 		an2.setBackground(Color.BLUE);
 		an2.addActionListener(this);
 		an2.setActionCommand("tianjia");
-		an3 = new JButton("ĞŞ¸Ä");
+		an3 = new JButton("ä¿®æ”¹");
 		an3.setBackground(Color.GREEN);
 		an3.addActionListener(this);
 		an3.setActionCommand("xiugai");
-		an4 = new JButton("É¾³ı");
+		an4 = new JButton("åˆ é™¤");
 		an4.setBackground(Color.RED);
 		an4.addActionListener(this);
 		an4.setActionCommand("shanchu");
@@ -75,7 +77,7 @@ public class MainPage extends JFrame implements ActionListener {
 
 		infPage = new InformationPage();
 		bg1 = new JTable(infPage);
-		//ÉèÖÃÄÚÈİ¾ÓÖĞ
+		//è®¾ç½®å†…å®¹å±…ä¸­
 		DefaultTableCellRenderer r = new DefaultTableCellRenderer();
 		r.setHorizontalAlignment(JLabel.CENTER);
 		bg1.setDefaultRenderer(Object.class, r);
@@ -87,7 +89,7 @@ public class MainPage extends JFrame implements ActionListener {
 		this.add(mb2, "South");
 		db = new DataBaseTest();
 		int amount = db.getDataAmount();
-		this.setTitle("¿â·¿ÎïÆ·¹ÜÀíÏµÍ³                               "+"¹²"+amount+"Ìõ¼ÇÂ¼");
+		this.setTitle("åº“æˆ¿ç‰©å“ç®¡ç†ç³»ç»Ÿ                               "+"å…±"+amount+"æ¡è®°å½•");
 		this.setSize(900, 600);
 		this.setLocation(201, 181);
 		this.setResizable(true);
@@ -112,24 +114,24 @@ public class MainPage extends JFrame implements ActionListener {
 			infPage = new InformationPage(sql);
 			bg1.setModel(infPage);
 		} else if (e.getActionCommand().equals("tianjia")) {
-			InsertPage tj = new InsertPage(this, "Ìí¼ÓÅä¼ş", true);
+			InsertPage tj = new InsertPage(this, "æ·»åŠ é…ä»¶", true);
 			infPage = new InformationPage();
 			bg1.setModel(infPage);
 
 		} else if (e.getActionCommand().equals("xiugai")) {
 			int ii = this.bg1.getSelectedRow();
 			if (ii == -1) {
-				JOptionPane.showMessageDialog(this, "ÇëÑ¡ÖĞÒªĞŞ¸ÄµÄĞĞ");
+				JOptionPane.showMessageDialog(this, "è¯·é€‰ä¸­è¦ä¿®æ”¹çš„è¡Œ");
 				return;
 			}
-			new UpdataPage(this, "ĞŞ¸ÄÅä¼şĞÅÏ¢", true, infPage, ii);
+			new UpdataPage(this, "ä¿®æ”¹é…ä»¶ä¿¡æ¯", true, infPage, ii);
 
 			infPage = new InformationPage();
 			bg1.setModel(infPage);
 		} else if (e.getActionCommand().equals("shanchu")) {
 			int ii = this.bg1.getSelectedRow();
 			if (ii == -1) {
-				JOptionPane.showMessageDialog(this, "ÇëÑ¡ÖĞÒªÉ¾³ıµÄĞĞ");
+				JOptionPane.showMessageDialog(this, "è¯·é€‰ä¸­è¦åˆ é™¤çš„è¡Œ");
 				return;
 			}
 			String st = (String) infPage.getValueAt(ii, 2);
@@ -140,14 +142,14 @@ public class MainPage extends JFrame implements ActionListener {
 		}
 	}
 
-	// ÉèÖÃ±í¸ñÁĞµÄ¿í¶È
+	// è®¾ç½®è¡¨æ ¼åˆ—çš„å®½åº¦
 	public TableColumnModel setColumnWidth(JTable table) {
 		int[] width = { 20, 70, 50,95,120,40,30,38,35,45};
-		TableColumnModel columns = table.getColumnModel();// »ñÈ¡±í¸ñÁĞÄ£ĞÍ
+		TableColumnModel columns = table.getColumnModel();// è·å–è¡¨æ ¼åˆ—æ¨¡å‹
 		//TableColumn column = new TableColumn();
-		for (int i = 0; i < 10; i++) { // ÕÒ³öÁĞ¿í
-			TableColumn column = columns.getColumn(i); // »ñÈ¡µÚÒ»¸öÁĞ
-			column.setPreferredWidth(width[i]); // ÉèÖÃÁĞ¿í
+		for (int i = 0; i < 10; i++) { // æ‰¾å‡ºåˆ—å®½
+			TableColumn column = columns.getColumn(i); // è·å–ç¬¬ä¸€ä¸ªåˆ—
+			column.setPreferredWidth(width[i]); // è®¾ç½®åˆ—å®½
 			//columns.addColumn(column);
 		}
 		return columns;
